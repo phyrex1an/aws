@@ -14,6 +14,7 @@ Build-type:          Simple
 Extra-source-files:  README.org
                      Examples/GetObject.hs
                      Examples/SimpleDb.hs
+                     Examples/Publish.hs
 
 Cabal-version:       >=1.10
 
@@ -66,8 +67,11 @@ Library
                        Aws.Ses.Commands.SendRawEmail,
                        Aws.Ses.Commands.ListIdentities,
                        Aws.Ses.Commands.VerifyEmailIdentity,
-                       Aws.Ses.Core
-
+                       Aws.Ses.Core,
+                       Aws.Sns
+                       Aws.Sns.Commands,
+                       Aws.Sns.Commands.Publish,
+                       Aws.Sns.Core
   Build-depends:
                        attempt              >= 0.3.1.1 && < 0.5,
                        base                 == 4.*,
@@ -126,6 +130,23 @@ Executable GetObject
                        base == 4.*,
                        aws,
                        http-conduit,
+                       conduit
+
+  Default-Language: Haskell2010
+
+Executable Publish
+  Main-is: Publish.hs
+  Hs-source-dirs: Examples
+
+  if !flag(Examples)
+    Buildable: False
+  else
+    Buildable: True
+    Build-depends:
+                       base == 4.*,
+                       aws,
+                       http-conduit,
+                       text,
                        conduit
 
   Default-Language: Haskell2010
